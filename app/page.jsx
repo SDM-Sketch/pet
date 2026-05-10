@@ -416,7 +416,7 @@ export default function HomePage() {
                 </div>
               ))}
             </aside>
-            <div className="store-map" aria-label="???????">
+            <div className="store-map" aria-label="门店位置示意图">
               <div className="map-canvas">
                 <span className="map-road main" />
                 <span className="map-road cross" />
