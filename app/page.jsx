@@ -91,9 +91,56 @@ const gallerySlides = [
   }
 ];
 
+const testimonials = [
+  {
+    name: "林女士",
+    pet: "比熊 · 奶油",
+    rating: "5.0",
+    text: "第一次带奶油来洗护，美容师会先检查皮肤和耳朵，过程也一直告诉我进度。回家后毛很蓬松，香味不冲，狗狗状态也很放松。",
+    tag: "基础洗护"
+  },
+  {
+    name: "周先生",
+    pet: "布偶猫 · 芝麻",
+    rating: "5.0",
+    text: "我家猫很怕吹风，这次分段护理做得很细，等候区能看到大概进度。接回来的时候脚底毛、指甲和耳朵都处理得很干净。",
+    tag: "猫咪专护"
+  },
+  {
+    name: "陈女士",
+    pet: "泰迪 · 豆豆",
+    rating: "4.9",
+    text: "圆脸修得很自然，没有剪得死板。店员还提醒了眼周护理和梳毛频率，后续自己在家打理轻松很多。",
+    tag: "美容造型"
+  },
+  {
+    name: "许先生",
+    pet: "柴犬 · 阿柴",
+    rating: "5.0",
+    text: "换毛季浮毛特别多，做完以后明显清爽。店里不会一味加项目，会先说明毛量、皮肤情况和实际需要，这点很安心。",
+    tag: "皮毛养护"
+  },
+  {
+    name: "王女士",
+    pet: "柯基 · 土豆",
+    rating: "4.9",
+    text: "预约制很省时间，到店不用长等。土豆洗完脚垫和肚皮都很干净，照片反馈也很及时，整体感觉专业又温柔。",
+    tag: "精致洗护"
+  },
+  {
+    name: "赵女士",
+    pet: "银渐层 · 小满",
+    rating: "5.0",
+    text: "之前在别处洗澡会应激，这次美容师一直轻声安抚，还建议我避开高峰时段。小满回家没有躲起来，体验比预期好很多。",
+    tag: "低刺激护理"
+  }
+];
+
 export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const totalSlides = gallerySlides.length;
+  const totalTestimonials = testimonials.length;
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -102,6 +149,14 @@ export default function HomePage() {
 
     return () => window.clearInterval(timer);
   }, [totalSlides]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveTestimonial((current) => (current + 1) % totalTestimonials);
+    }, 4300);
+
+    return () => window.clearInterval(timer);
+  }, [totalTestimonials]);
 
   const visitInfo = useMemo(
     () => [
@@ -125,6 +180,7 @@ export default function HomePage() {
             <a href="#services">洗护项目</a>
             <a href="#process">服务流程</a>
             <a href="#pricing">套餐价格</a>
+            <a href="#testimonials">客户评价</a>
             <a href="#visit">到店信息</a>
           </div>
           <a className="nav-cta" href="#booking">预约护理</a>
@@ -270,6 +326,80 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="testimonials" id="testimonials" aria-labelledby="testimonials-title">
+          <div className="section-inner">
+            <div className="section-head">
+              <h2 id="testimonials-title">客户评价</h2>
+              <p>来自真实到店主人的反馈，记录宠物洗护后的状态、服务细节和复购理由。</p>
+            </div>
+            <div className="testimonial-carousel" aria-label="客户评价轮播">
+              <div
+                className="testimonial-track"
+                style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
+              >
+                {testimonials.map((item) => (
+                  <article className="testimonial-slide" key={`${item.name}-${item.pet}`}>
+                    <div className="testimonial-card">
+                      <div className="review-meta">
+                        <span>{item.tag}</span>
+                        <strong>{item.rating}</strong>
+                      </div>
+                      <p>“{item.text}”</p>
+                      <div className="reviewer">
+                        <span>{item.name}</span>
+                        <small>{item.pet}</small>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <div className="testimonial-controls">
+                <button
+                  className="review-button"
+                  type="button"
+                  aria-label="上一条评价"
+                  onClick={() => setActiveTestimonial((activeTestimonial - 1 + totalTestimonials) % totalTestimonials)}
+                >
+                  ‹
+                </button>
+                <div className="review-dots" aria-label="评价分页">
+                  {testimonials.map((item, index) => (
+                    <button
+                      className={`review-dot${activeTestimonial === index ? " is-active" : ""}`}
+                      type="button"
+                      aria-label={`查看第 ${index + 1} 条客户评价`}
+                      aria-current={activeTestimonial === index ? "true" : "false"}
+                      key={`${item.name}-${item.tag}`}
+                      onClick={() => setActiveTestimonial(index)}
+                    />
+                  ))}
+                </div>
+                <button
+                  className="review-button"
+                  type="button"
+                  aria-label="下一条评价"
+                  onClick={() => setActiveTestimonial((activeTestimonial + 1) % totalTestimonials)}
+                >
+                  ›
+                </button>
+              </div>
+              <div className="testimonial-preview" aria-hidden="true">
+                {testimonials.slice(0, 3).map((item, index) => {
+                  const previewIndex = (activeTestimonial + index + 1) % totalTestimonials;
+                  const preview = testimonials[previewIndex];
+                  return (
+                    <div className="preview-card" key={`${preview.name}-${preview.pet}`}>
+                      <strong>{preview.rating}</strong>
+                      <span>{preview.name}</span>
+                      <small>{preview.pet}</small>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="visit" id="visit">
           <div className="section-inner visit-layout">
             <div>
@@ -286,6 +416,19 @@ export default function HomePage() {
                 </div>
               ))}
             </aside>
+            <div className="store-map" aria-label="???????">
+              <div className="map-canvas">
+                <span className="map-road main" />
+                <span className="map-road cross" />
+                <span className="map-road side-a" />
+                <span className="map-road side-b" />
+                <span className="map-block block-a" />
+                <span className="map-block block-b" />
+                <span className="map-block block-c" />
+                <span className="map-block block-d" />
+                <span className="map-pin" aria-hidden="true"><span>M</span></span>
+              </div>
+            </div>
           </div>
         </section>
 
