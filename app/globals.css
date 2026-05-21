@@ -682,6 +682,7 @@ section {
 }
 
 .info-panel {
+  grid-column: 1 / -1;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 8px;
   display: grid;
@@ -710,6 +711,8 @@ section {
 }
 
 .store-map {
+  grid-column: 1 / -1;
+  width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 8px;
   overflow: hidden;
@@ -719,8 +722,8 @@ section {
 
 .map-canvas {
   position: relative;
-  min-height: 380px;
-  aspect-ratio: 16 / 7;
+  min-height: 460px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(55, 107, 97, 0.08) 1px, transparent 1px) 0 0 / 72px 72px,
@@ -1056,7 +1059,7 @@ footer {
   }
 
   .map-canvas {
-    min-height: 300px;
+    min-height: 360px;
     aspect-ratio: 4 / 3;
   }
 
