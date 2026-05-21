@@ -449,6 +449,10 @@ export default function HomePage() {
                 <input type="tel" name="phone" placeholder="用于确认预约" autoComplete="tel" />
               </label>
               <label>
+                期望到店日期
+                <input type="datetime-local" name="visitAt" defaultValue="2026-05-17T09:30" />
+              </label>
+              <label>
                 宠物类型
                 <select name="pet" defaultValue="小型犬">
                   <option>小型犬</option>
