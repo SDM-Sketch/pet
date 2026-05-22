@@ -133,6 +133,34 @@ const testimonials = [
     rating: "5.0",
     text: "之前在别处洗澡会应激，这次美容师一直轻声安抚，还建议我避开高峰时段。小满回家没有躲起来，体验比预期好很多。",
     tag: "低刺激护理"
+  },
+  {
+    name: "梁女士",
+    pet: "萨摩耶 · 糖糖",
+    rating: "4.9",
+    text: "长毛犬洗护最怕吹不透，糖糖这次底毛吹得很干，胸口和尾巴也梳得很顺。店员还把容易打结的位置标出来，回家护理有方向。",
+    tag: "长毛犬护理"
+  },
+  {
+    name: "沈先生",
+    pet: "金毛 · 芒果",
+    rating: "5.0",
+    text: "芒果运动后味道比较重，做完深层洗护以后干净很多，但香味很自然。交付时还讲了耳道和脚趾缝的情况，细节比预期扎实。",
+    tag: "深层清洁"
+  },
+  {
+    name: "何女士",
+    pet: "英短 · 年糕",
+    rating: "5.0",
+    text: "年糕胆子小，美容师没有急着上手，而是先让它熟悉环境。整个过程节奏慢一点但很稳，接回来毛顺、指甲圆，猫也没有明显紧张。",
+    tag: "猫咪安抚"
+  },
+  {
+    name: "顾先生",
+    pet: "雪纳瑞 · 啵啵",
+    rating: "4.9",
+    text: "造型沟通很清楚，会先确认胡子长度和眉毛形状。修完很精神，但没有剪得太夸张，家里人都说像换了一只小绅士。",
+    tag: "犬种造型"
   }
 ];
 
@@ -333,25 +361,35 @@ export default function HomePage() {
               <p>来自真实到店主人的反馈，记录宠物洗护后的状态、服务细节和复购理由。</p>
             </div>
             <div className="testimonial-carousel" aria-label="客户评价轮播">
-              <div
-                className="testimonial-track"
-                style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
-              >
-                {testimonials.map((item) => (
-                  <article className="testimonial-slide" key={`${item.name}-${item.pet}`}>
-                    <div className="testimonial-card">
-                      <div className="review-meta">
-                        <span>{item.tag}</span>
-                        <strong>{item.rating}</strong>
+              <div className="testimonial-story">
+                <span>到店主人反馈</span>
+                <strong>{String(activeTestimonial + 1).padStart(2, "0")}</strong>
+                <small>/ {String(totalTestimonials).padStart(2, "0")}</small>
+              </div>
+              <div className="testimonial-window">
+                <div
+                  className="testimonial-track"
+                  style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
+                >
+                  {testimonials.map((item, index) => (
+                    <article
+                      className={`testimonial-slide${activeTestimonial === index ? " is-active" : ""}`}
+                      key={`${item.name}-${item.pet}`}
+                    >
+                      <div className="testimonial-card">
+                        <div className="review-meta">
+                          <span>{item.tag}</span>
+                          <strong>{item.rating}<small>分</small></strong>
+                        </div>
+                        <p>“{item.text}”</p>
+                        <div className="reviewer">
+                          <span>{item.name}</span>
+                          <small>{item.pet}</small>
+                        </div>
                       </div>
-                      <p>“{item.text}”</p>
-                      <div className="reviewer">
-                        <span>{item.name}</span>
-                        <small>{item.pet}</small>
-                      </div>
-                    </div>
-                  </article>
-                ))}
+                    </article>
+                  ))}
+                </div>
               </div>
               <div className="testimonial-controls">
                 <button
@@ -371,7 +409,9 @@ export default function HomePage() {
                       aria-current={activeTestimonial === index ? "true" : "false"}
                       key={`${item.name}-${item.tag}`}
                       onClick={() => setActiveTestimonial(index)}
-                    />
+                    >
+                      <span />
+                    </button>
                   ))}
                 </div>
                 <button
@@ -395,6 +435,9 @@ export default function HomePage() {
                     </div>
                   );
                 })}
+              </div>
+              <div className="testimonial-progress" aria-hidden="true">
+                <span key={activeTestimonial} />
               </div>
             </div>
           </div>
